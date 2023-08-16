@@ -5,7 +5,7 @@ const contracts = {
       name: "localhost",
       contracts: {
         YourContract: {
-          address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+          address: "0x0165878A594ca255338adfa4d48449f69242Eb8F",
           abi: [
             {
               inputs: [
@@ -16,7 +16,7 @@ const contracts = {
                 },
                 {
                   internalType: "address",
-                  name: "group",
+                  name: "groupAddress",
                   type: "address",
                 },
               ],
@@ -29,11 +29,34 @@ const contracts = {
               inputs: [
                 {
                   internalType: "string",
-                  name: "name",
+                  name: "groupName",
                   type: "string",
                 },
               ],
               name: "createGroup",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "string",
+                  name: "taskName",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "taskDescription",
+                  type: "string",
+                },
+                {
+                  internalType: "address",
+                  name: "groupAddress",
+                  type: "address",
+                },
+              ],
+              name: "createTask",
               outputs: [],
               stateMutability: "nonpayable",
               type: "function",

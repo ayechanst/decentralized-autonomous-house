@@ -40,21 +40,27 @@ contract YourContract {
 
 	Group[] public groups;
 
-	function createGroup(string memory name) public {
+	function createGroup(string memory groupName) public {
 		Group memory newGroup;
-		newGroup.name = name;
-		newGroup.key = address(bytes20(keccak256(abi.encode(name))));
+		newGroup.name = groupName;
+		newGroup.key = address(bytes20(keccak256(abi.encode(groupName))));
 		groups.push(newGroup);
 	}
 
-	function addPerson(string memory name, address group) public {
+	function addPerson(string memory name, address groupAddress) public {
 		Person memory newPerson;
 		newPerson.name = name;
-		peopleMapping[group].push(newPerson);
+		peopleMapping[groupAddress].push(newPerson);
+	}
+
+	function createTask(string memory taskName, string memory taskDescription, address groupAddress) public {
+		Task memory newTask;
+		newTask.name = taskName;
+		newTask.description = taskDescription;
+		taskMapping[groupAddress].push(newTask);
 	}
 
 
-	// function addPerson(string memory name) public {}
 
 
 
