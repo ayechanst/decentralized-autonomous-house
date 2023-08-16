@@ -14,11 +14,6 @@ import "hardhat/console.sol";
  */
 contract YourContract {
 
-	// use Group.key to get the array of people
-	mapping(uint256 => People[]) peopleMapping;
-	// use Group.key to get the array of tasks
-	mapping(uint256 => Task[]) taskMapping;
-
 	struct Person {
 		string name;
 		uint256 balance;
@@ -35,15 +30,23 @@ contract YourContract {
 	struct Group {
 		string name;
 		uint256 key;
+		uint256 balance;
 	}
 
-	function createGroup(string memory name) {
+	// use Group.key to get the array of people
+	mapping(uint256 => Person[]) peopleMapping;
+	// use Group.key to get the array of tasks
+	mapping(uint256 => Task[]) taskMapping;
+
+	Group[] public groups;
+
+	function createGroup(string memory name) public {
 		Group memory newGroup;
+		newGroup.name = name;
+		groups.push(newGroup);
 	}
 
-	function addPerson(string memory name) public {
-
-	}
+	// function addPerson(string memory name) public {}
 
 
 
