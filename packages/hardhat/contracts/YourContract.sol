@@ -29,22 +29,30 @@ contract YourContract {
 
 	struct Group {
 		string name;
-		uint256 key;
+		address key;
 		uint256 balance;
 	}
 
 	// use Group.key to get the array of people
-	mapping(uint256 => Person[]) peopleMapping;
+	mapping(address => Person[]) public peopleMapping;
 	// use Group.key to get the array of tasks
-	mapping(uint256 => Task[]) taskMapping;
+	mapping(address => Task[]) public taskMapping;
 
 	Group[] public groups;
 
 	function createGroup(string memory name) public {
 		Group memory newGroup;
 		newGroup.name = name;
+		newGroup.key = address(bytes20(keccak256(abi.encode(name))));
 		groups.push(newGroup);
 	}
+
+	function addPerson(string memory name, address group) public {
+		Person memory newPerson;
+		newPerson.name = name;
+		peopleMapping[group].push(newPerson);
+	}
+
 
 	// function addPerson(string memory name) public {}
 
