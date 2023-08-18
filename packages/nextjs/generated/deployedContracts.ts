@@ -5,7 +5,7 @@ const contracts = {
       name: "localhost",
       contracts: {
         YourContract: {
-          address: "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+          address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
           abi: [
             {
               inputs: [
@@ -31,6 +31,11 @@ const contracts = {
                   internalType: "string",
                   name: "groupName",
                   type: "string",
+                },
+                {
+                  internalType: "address",
+                  name: "creator",
+                  type: "address",
                 },
               ],
               name: "createGroup",
@@ -62,6 +67,41 @@ const contracts = {
               type: "function",
             },
             {
+              inputs: [],
+              name: "getGroups",
+              outputs: [
+                {
+                  components: [
+                    {
+                      internalType: "string",
+                      name: "name",
+                      type: "string",
+                    },
+                    {
+                      internalType: "address",
+                      name: "creator",
+                      type: "address",
+                    },
+                    {
+                      internalType: "address",
+                      name: "key",
+                      type: "address",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "balance",
+                      type: "uint256",
+                    },
+                  ],
+                  internalType: "struct YourContract.Group[]",
+                  name: "",
+                  type: "tuple[]",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
               inputs: [
                 {
                   internalType: "uint256",
@@ -75,6 +115,11 @@ const contracts = {
                   internalType: "string",
                   name: "name",
                   type: "string",
+                },
+                {
+                  internalType: "address",
+                  name: "creator",
+                  type: "address",
                 },
                 {
                   internalType: "address",

@@ -4,16 +4,7 @@ pragma solidity >=0.8.0 <0.9.0;
 // Useful for debugging. Remove when deploying to a live network.
 import "hardhat/console.sol";
 
-// Use openzeppelin to inherit battle-tested implementations (ERC20, ERC721, etc)
-// import "@openzeppelin/contracts/access/Ownable.sol";
-
-/**
- * A smart contract that allows changing a state variable of the contract and tracking the changes
- * It also allows the owner to withdraw the Ether in the contract
- * @author BuidlGuidl
- */
 contract YourContract {
-
 	struct Person {
 		string name;
 		uint256 balance;
@@ -29,6 +20,7 @@ contract YourContract {
 
 	struct Group {
 		string name;
+		address creator;
 		address key;
 		uint256 balance;
 	}
@@ -40,11 +32,16 @@ contract YourContract {
 
 	Group[] public groups;
 
-	function createGroup(string memory groupName) public {
+	function createGroup(string memory groupName, address creator) public {
 		Group memory newGroup;
 		newGroup.name = groupName;
+		newGroup.creator = creator;
 		newGroup.key = address(bytes20(keccak256(abi.encode(groupName))));
 		groups.push(newGroup);
+	}
+
+	function getGroups() public view returns (Group[] memory) {
+		return groups;
 	}
 
 	function addPerson(string memory name, address groupAddress) public {
@@ -53,19 +50,14 @@ contract YourContract {
 		peopleMapping[groupAddress].push(newPerson);
 	}
 
-	function createTask(string memory taskName, string memory taskDescription, address groupAddress) public {
+	function createTask(
+		string memory taskName,
+		string memory taskDescription,
+		address groupAddress
+	) public {
 		Task memory newTask;
 		newTask.name = taskName;
 		newTask.description = taskDescription;
 		taskMapping[groupAddress].push(newTask);
 	}
-
-
-
-
-
-
-
-
-
 }
