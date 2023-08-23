@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { NextPage } from "next";
 import { CreateGroup } from "~~/components/CreateGroup";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
@@ -25,7 +24,7 @@ const Home: NextPage = () => {
                             groupName={group.name}
                             groupBalance={Number(group.balance)}
                             groupCreator={group.creator}
-                          groupKey={group.key}
+                            groupKey={group.key}
                         />
 
                     )
