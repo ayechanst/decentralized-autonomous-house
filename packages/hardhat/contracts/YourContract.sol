@@ -40,6 +40,20 @@ contract YourContract {
 		groups.push(newGroup);
 	}
 
+	function deleteGroup(address key) public {
+		uint256 indexToDelete;
+		for (uint256 i = 0; i < groups.length; i++) {
+			if (groups[i].key == key) {
+				i = indexToDelete;
+			}
+		}
+		require(indexToDelete < groups.length, "index out of bounds");
+		for (uint256 i = indexToDelete; i < groups.length - 1; i++) {
+			groups[i] = groups[i + 1];
+		}
+		groups.pop();
+	}
+
 	function getGroups() public view returns (Group[] memory) {
 		return groups;
 	}

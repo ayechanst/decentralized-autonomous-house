@@ -3,8 +3,10 @@ import type { NextPage } from "next";
 import { CreateGroup } from "~~/components/CreateGroup";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { GroupCard } from "~~/components/GroupCard";
+import { useAccount } from "wagmi";
 
 const Home: NextPage = () => {
+    const { address } = useAccount();
 
     const { data: groupArray } = useScaffoldContractRead({
         contractName: "YourContract",
@@ -17,11 +19,18 @@ const Home: NextPage = () => {
         <>
             <CreateGroup />
             {groupArray?.map((group) => {
-                <GroupCard
-                    groupName={group.name}
-                    groupBalance={Number(group.balance)}
-                    groupCreator={group.creator}
-                />
+                if (address == group.creator) {
+                    return (
+                        <GroupCard
+                            groupName={group.name}
+                            groupBalance={Number(group.balance)}
+                            groupCreator={group.creator}
+                          groupKey={group.key}
+                        />
+
+                    )
+                }
+
             })
 
             }
