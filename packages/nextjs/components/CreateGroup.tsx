@@ -16,8 +16,6 @@ export const CreateGroup = () => {
         },
     });
 
-    console.log('test');
-
 
     function handleClick() {
         setCreateGroup(!createGroup);
