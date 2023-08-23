@@ -1,4 +1,5 @@
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
+import { useRouter } from "next/router";
 import React, { useState } from 'react';
 
 interface CardProps {
@@ -10,16 +11,13 @@ interface CardProps {
 
 export const GroupCard: React.FC<CardProps> = ({ groupName, groupBalance, groupCreator, groupKey }) => {
     const [nonPropGroupKey, setNonPropGroupKey] = useState("");
+    const router = useRouter();
 
     const { writeAsync } = useScaffoldContractWrite({
         contractName: "YourContract",
         functionName: "deleteGroup",
         args: [nonPropGroupKey],
     });
-
-    function enterGroup() {
-        //enter the group
-    }
 
     return (
         <>
@@ -29,7 +27,15 @@ export const GroupCard: React.FC<CardProps> = ({ groupName, groupBalance, groupC
                     <div>{groupBalance}</div>
                     <div>{groupCreator}</div>
                     <div className="card-actions justify-end">
-                        <button onClick={enterGroup} className="btn">Enter</button>
+                        <button onClick={
+                            () => {
+                                router.push({
+                                    pathname: "./groups",
+                                    query: { propsToPass: groupName }
+
+                                })
+                            }
+                        } className="btn">Enter</button>
                         <button onClick={() => {
                             setNonPropGroupKey(groupKey);
                             writeAsync();
