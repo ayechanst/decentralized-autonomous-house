@@ -64,6 +64,14 @@ contract YourContract {
 		peopleMapping[groupAddress].push(newPerson);
 	}
 
+	function getPeople(address key) public view returns (People[] memory){
+		//gets people in a group
+		People[] = [];
+		//use an itterative method to retrieve them
+		//or return whole mapping
+
+	}
+
 	function createTask(
 		string memory taskName,
 		string memory taskDescription,
