@@ -7,11 +7,11 @@ interface StatProps {
 
 export const Stats: React.FC<StatProps> = ({ groupKeyProps }) => {
 
-  const { data: peopleArray } = useScaffoldContractRead({
-    contractName: "YourContract",
-    functionName: "getPeople",
-    args: [groupKeyProps]
-  });
+    const { data: peopleArray } = useScaffoldContractRead({
+        contractName: "YourContract",
+        functionName: "getPeople",
+        args: [groupKeyProps]
+    });
 
     return (
         <>

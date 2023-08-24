@@ -1,14 +1,11 @@
-import { useRouter } from "next/router";
 import { Stats } from "../components/Stats"
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
+interface StatProps {
+    groupKeyProps: string,
+}
 
-// figure out props
-export const Group: React.FC = () => {
-    const router = useRouter();
-    const groupKeyProps = router.query.propsToPass;
-
-
+export const Group: React.FC<StatProps> = ({groupKeyProps}) => {
 
     return (
         <>
@@ -20,7 +17,7 @@ export const Group: React.FC = () => {
                         <li><button className="btn btn-primary w-full">Suggest Task</button></li>
                         <li><button className="btn btn-primary w-full">Complete Task</button></li>
                     </ul>
-                        <Stats key={groupKeyProps}/>
+                        <Stats groupKeyProps={groupKeyProps}/>
                 </div>
                 <div className="w-3/4 p-8">
                     <header className="bg-white shadow-md p-4">
