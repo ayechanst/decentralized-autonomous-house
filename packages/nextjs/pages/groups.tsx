@@ -1,9 +1,10 @@
 import React from "react";
+import { Group } from "../components/Group"
 
 const groups = () => {
     return (
         <>
-            <div>pee pee</div>
+            <Group />
             {/* we pass data in here and its in that
                 component that the prop of name is passed */}
         </>

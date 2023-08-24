@@ -31,7 +31,7 @@ export const GroupCard: React.FC<CardProps> = ({ groupName, groupBalance, groupC
                             () => {
                                 router.push({
                                     pathname: "./groups",
-                                    query: { propsToPass: groupName }
+                                    query: { propsToPass: groupKey }
 
                                 })
                             }
