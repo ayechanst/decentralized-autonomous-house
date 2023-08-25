@@ -1,11 +1,11 @@
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import React, { useState } from 'react';
 
-interface StatProps {
+interface TaskProps {
     groupKeyProps: string,
 }
 
-export const AddTaskForm: React.FC<StatProps & { onClose: () => void }> = ({ groupKeyProps, onClose }) => {
+export const AddTaskForm: React.FC<TaskProps & { onClose: () => void }> = ({ groupKeyProps, onClose }) => {
     const [taskName, setTaskName] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
 

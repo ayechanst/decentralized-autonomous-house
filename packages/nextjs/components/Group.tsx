@@ -16,6 +16,10 @@ export const Group: React.FC = () => {
         setPersonForm(false);
     }
 
+    const closeTaskForm = () => {
+        setTaskForm(false);
+    }
+
     const { data: taskArray } = useScaffoldContractRead({
         contractName: "YourContract",
         functionName: "getTasks",
@@ -33,7 +37,7 @@ export const Group: React.FC = () => {
                         <li><button className="btn btn-primary w-full">Complete Task</button></li>
                     </ul>
                     {personForm && <AddPersonForm groupKeyProps={groupKeyProps as string} onClose={closePersonForm} />}
-                    {taskForm && <AddTaskForm groupKeyProps={groupKeyProps as string} onClose={closePersonForm} />}
+                    {taskForm && <AddTaskForm groupKeyProps={groupKeyProps as string} onClose={closeTaskForm} />}
                     {(!personForm && !taskForm) && <Stats groupKeyProps={groupKeyProps as string} />}
                 </div>
                 <div className="w-3/4 p-8">
