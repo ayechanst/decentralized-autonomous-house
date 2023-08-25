@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
 interface StatProps {
@@ -21,9 +21,11 @@ export const Stats: React.FC<StatProps> = ({ groupKeyProps }) => {
                     {peopleArray?.map((person) => {
                         return (
                             <>
-                                <div>{person.name}</div>
+                                <div >
+                                <div className="card-title">{person.name}</div>
                                 <div>Balance: {Number(person.balance)}</div>
                                 <div>Reputation: {Number(person.reputation)}</div>
+                                </div>
                             </>
                         )
                     })}
