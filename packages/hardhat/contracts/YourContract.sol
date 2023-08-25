@@ -76,7 +76,7 @@ contract YourContract {
 		for (uint256 i = 0; i < groups.length; i++) {
 			address currentGroupKey = groups[i].key;
 			Person[] memory currentGroupPeople = peopleMapping[currentGroupKey];
-			for (uint256 j = 0; j < currentGroupPeople.length; i++) {
+			for (uint256 j = 0; j < currentGroupPeople.length; j++) {
 				if (currentGroupPeople[j].personAddress == inviteesAddress) {
 					personsGroups = addGroup(personsGroups, groups[i]);
 				}

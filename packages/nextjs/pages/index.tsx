@@ -15,15 +15,39 @@ const Home: NextPage = () => {
         functionName: "getGroups",
     });
 
+    const { data: inviteeGroupArray } = useScaffoldContractRead({
+        contractName: "YourContract",
+        functionName: "getSomeonesGroups",
+        args: [address],
+    });
 
     return (
         <>
             <div>
                 <CreateGroup />
-                {groupArray?.map((group) => {
-                    {/* put in group.key in func arg */ }
-                    if (address == group.creator) {
-                        {/* or if address == group member */ }
+                <div>
+                    <div>
+                        Your Groups:
+                    </div>
+                    {groupArray?.map((group) => {
+                        if (address == group.creator) {
+                            return (
+                                <GroupCard
+                                    groupName={group.name}
+                                    groupBalance={Number(group.balance)}
+                                    groupCreator={group.creator}
+                                    groupKey={group.key}
+                                />
+                            )
+                        }
+                    })
+                    }
+                </div>
+                <div>
+                    Groups You are appart of
+                </div>
+                <div>
+                    {inviteeGroupArray?.map((group: any) => {
                         return (
                             <GroupCard
                                 groupName={group.name}
@@ -32,9 +56,8 @@ const Home: NextPage = () => {
                                 groupKey={group.key}
                             />
                         )
-                    }
-                })
-                }
+                    })}
+                </div>
             </div>
             <div>
                 <JoinGroup />
