@@ -85,7 +85,7 @@ contract YourContract {
 		return personsGroups;
 	}
 
-function addGroup(Group[] memory arr, Group memory newGroup) internal pure returns (Group[] memory) {
+	function addGroup(Group[] memory arr, Group memory newGroup) internal pure returns (Group[] memory) {
     Group[] memory newArr = new Group[](arr.length + 1);
     for (uint256 i = 0; i < arr.length; i++) {
         newArr[i] = arr[i];
@@ -101,10 +101,9 @@ function addGroup(Group[] memory arr, Group memory newGroup) internal pure retur
 		peopleMapping[groupAddress].push(newPerson);
 	}
 
-	function getPeople(address key) public view returns (Person[] memory){
+	function getPeople(address key) public view returns (Person[] memory) {
 		return peopleMapping[key];
 	}
-
 
 	function createTask(
 		string memory taskName,
@@ -116,4 +115,9 @@ function addGroup(Group[] memory arr, Group memory newGroup) internal pure retur
 		newTask.description = taskDescription;
 		taskMapping[groupAddress].push(newTask);
 	}
+
+	function getTasks(address key) public view returns (Task[] memory) {
+		return taskMapping[key];
+	}
+
 }

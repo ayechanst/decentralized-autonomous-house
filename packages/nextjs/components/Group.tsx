@@ -1,9 +1,10 @@
 import { Stats } from "../components/Stats"
-import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import React, { useState } from 'react';
 import { AddPersonForm } from "./AddPersonForm";
 import { useRouter } from "next/router";
 import { AddTaskForm } from "./AddTaskForm";
+import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+import { TaskCard } from "./TaskCard";
 
 export const Group: React.FC = () => {
     const router = useRouter();
@@ -14,6 +15,12 @@ export const Group: React.FC = () => {
     const closePersonForm = () => {
         setPersonForm(false);
     }
+
+    const { data: taskArray } = useScaffoldContractRead({
+        contractName: "YourContract",
+        functionName: "getTasks",
+        args: [groupKeyProps as string],
+    });
 
     return (
         <>
@@ -28,14 +35,17 @@ export const Group: React.FC = () => {
                     {personForm && <AddPersonForm groupKeyProps={groupKeyProps as string} onClose={closePersonForm} />}
                     {taskForm && <AddTaskForm groupKeyProps={groupKeyProps as string} onClose={closePersonForm} />}
                     {(!personForm && !taskForm) && <Stats groupKeyProps={groupKeyProps as string} />}
-
                 </div>
                 <div className="w-3/4 p-8">
                     <header className="bg-white shadow-md p-4">
                         <h1 className="text-black text-xl font-semibold">Group Key: {groupKeyProps}</h1>
                     </header>
                     <main>
-                        {/* Your main content */}
+                        {taskArray?.map((task) => {
+                            return (
+                                <TaskCard taskName={task.name} taskDescription={task.description} />
+                            )
+                        })}
                         <div>main content</div>
                     </main>
                 </div>
