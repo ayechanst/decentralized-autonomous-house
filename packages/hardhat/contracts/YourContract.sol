@@ -71,6 +71,29 @@ contract YourContract {
 		return groups;
 	}
 
+	function getSomeonesGroups(address inviteesAddress) public returns (Group[] memory) {
+		Group[] memory personsGroups;
+		for (uint256 i = 0; i < groups.length; i++) {
+			address currentGroupKey = groups[i].key;
+			Person[] memory currentGroupPeople = peopleMapping[currentGroupKey];
+			for (uint256 j = 0; j < currentGroupPeople.length; i++) {
+				if (currentGroupPeople[j].personAddress == inviteesAddress) {
+					personsGroups = addGroup(personsGroups, groups[i]);
+				}
+			}
+		}
+		return personsGroups;
+	}
+
+function addGroup(Group[] memory arr, Group memory newGroup) internal pure returns (Group[] memory) {
+    Group[] memory newArr = new Group[](arr.length + 1);
+    for (uint256 i = 0; i < arr.length; i++) {
+        newArr[i] = arr[i];
+    }
+    newArr[arr.length] = newGroup;
+    return newArr;
+}
+
 	function addPerson(string memory name, address personAddress, address groupAddress) public {
 		Person memory newPerson;
 		newPerson.name = name;
@@ -81,6 +104,7 @@ contract YourContract {
 	function getPeople(address key) public view returns (Person[] memory){
 		return peopleMapping[key];
 	}
+
 
 	function createTask(
 		string memory taskName,

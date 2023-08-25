@@ -16,45 +16,31 @@ const Home: NextPage = () => {
     });
 
 
-    function personsGroups(groupKey: string) {
-        const { data: peopleArray } = useScaffoldContractRead({
-            contractName: "YourContract",
-            functionName: "getPeople",
-            args: [groupKey]
-        })
-        if (!peopleArray) {
-            return false;
-        } else {
-            return true;
-        }
-}
-
-return (
-    <>
-        <div>
-            <CreateGroup />
-            {groupArray?.map((group) => {
-                {/* put in group.key in func arg */ }
-                const personIsInGroup = personsGroups(group.key);
-                if (address == group.creator || personIsInGroup) {
-                    {/* or if address == group member */ }
-                    return (
-                        <GroupCard
-                            groupName={group.name}
-                            groupBalance={Number(group.balance)}
-                            groupCreator={group.creator}
-                            groupKey={group.key}
-                        />
-                    )
+    return (
+        <>
+            <div>
+                <CreateGroup />
+                {groupArray?.map((group) => {
+                    {/* put in group.key in func arg */ }
+                    if (address == group.creator) {
+                        {/* or if address == group member */ }
+                        return (
+                            <GroupCard
+                                groupName={group.name}
+                                groupBalance={Number(group.balance)}
+                                groupCreator={group.creator}
+                                groupKey={group.key}
+                            />
+                        )
+                    }
+                })
                 }
-            })
-            }
-        </div>
-        <div>
-            <JoinGroup />
-        </div>
-    </>
-);
+            </div>
+            <div>
+                <JoinGroup />
+            </div>
+        </>
+    );
 };
 
 export default Home;
