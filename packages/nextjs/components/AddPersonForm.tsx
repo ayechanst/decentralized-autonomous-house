@@ -7,12 +7,13 @@ interface StatProps {
 
 export const AddPersonForm: React.FC<StatProps & { onClose: () => void }> = ({ groupKeyProps, onClose }) => {
     const [personName, setPersonName] = useState("");
+    const [personAddress, setPersonAddress] = useState("");
 
     const { writeAsync } = useScaffoldContractWrite({
         contractName: "YourContract",
         functionName: "addPerson",
         // string, address
-        args: [personName, groupKeyProps],
+        args: [personName, personAddress, groupKeyProps],
     });
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -32,9 +33,16 @@ export const AddPersonForm: React.FC<StatProps & { onClose: () => void }> = ({ g
                             <input
                                 className="input input-bordered w-full max-w-xs"
                                 placeholder="Person's name"
-                                id="createGameInput"
                                 value={personName}
                                 onChange={e => setPersonName(e.target.value)}
+                                type="string"
+                                required
+                            />
+                            <input
+                                className="input input-bordered w-full max-w-xs"
+                                placeholder="Person's Address"
+                                value={personAddress}
+                                onChange={e => setPersonAddress(e.target.value)}
                                 type="string"
                                 required
                             />

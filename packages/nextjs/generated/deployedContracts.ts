@@ -5,7 +5,7 @@ const contracts = {
       name: "localhost",
       contracts: {
         YourContract: {
-          address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+          address: "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
           abi: [
             {
               inputs: [
@@ -13,6 +13,11 @@ const contracts = {
                   internalType: "string",
                   name: "name",
                   type: "string",
+                },
+                {
+                  internalType: "address",
+                  name: "personAddress",
+                  type: "address",
                 },
                 {
                   internalType: "address",
@@ -132,6 +137,11 @@ const contracts = {
                       type: "string",
                     },
                     {
+                      internalType: "address",
+                      name: "personAddress",
+                      type: "address",
+                    },
+                    {
                       internalType: "uint256",
                       name: "balance",
                       type: "uint256",
@@ -188,6 +198,19 @@ const contracts = {
               inputs: [
                 {
                   internalType: "address",
+                  name: "key",
+                  type: "address",
+                },
+              ],
+              name: "joinGroup",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
                   name: "",
                   type: "address",
                 },
@@ -203,6 +226,11 @@ const contracts = {
                   internalType: "string",
                   name: "name",
                   type: "string",
+                },
+                {
+                  internalType: "address",
+                  name: "personAddress",
+                  type: "address",
                 },
                 {
                   internalType: "uint256",

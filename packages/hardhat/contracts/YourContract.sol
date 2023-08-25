@@ -7,6 +7,7 @@ import "hardhat/console.sol";
 contract YourContract {
 	struct Person {
 		string name;
+		address personAddress;
 		uint256 balance;
 		uint256 reputation;
 	}
@@ -54,13 +55,26 @@ contract YourContract {
 		groups.pop();
 	}
 
+	function joinGroup(address key) public {
+		bool inGroup = false;
+		Person[] memory peopleInGroup;
+		peopleInGroup = peopleMapping[key];
+		for (uint256 i = 0; i < peopleInGroup.length; i++) {
+			if (peopleInGroup[i].personAddress == msg.sender) {
+				inGroup = true;
+			}
+		}
+		require(inGroup, "You are not invited");
+	}
+
 	function getGroups() public view returns (Group[] memory) {
 		return groups;
 	}
 
-	function addPerson(string memory name, address groupAddress) public {
+	function addPerson(string memory name, address personAddress, address groupAddress) public {
 		Person memory newPerson;
 		newPerson.name = name;
+		newPerson.personAddress = personAddress;
 		peopleMapping[groupAddress].push(newPerson);
 	}
 

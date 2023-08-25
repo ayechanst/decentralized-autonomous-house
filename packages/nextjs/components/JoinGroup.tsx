@@ -1,46 +1,54 @@
 import React, { useState } from "react";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
-import { useAccount } from "wagmi";
+import { useRouter } from "next/router";
 
-export const CreateGroup = () => {
-    const [createGroup, setCreateGroup] = useState(false);
-    const [groupName, setGroupName] = useState("");
-    const { address } = useAccount();
+export const JoinGroup = () => {
+    const [joinGroup, setJoinGroup] = useState(false);
+    const [groupKey, setGroupKey] = useState("");
+    const router = useRouter();
 
     const { writeAsync } = useScaffoldContractWrite({
         contractName: "YourContract",
-        functionName: "createGroup",
-        args: [groupName, address],
+        functionName: "joinGroup",
+        args: [groupKey],
     });
 
-
     function handleClick() {
-        setCreateGroup(!createGroup);
+        setJoinGroup(!joinGroup);
     }
+
+    function enterGroup() {
+        router.push({
+            pathname: "./groups",
+            query: { propsToPass: groupKey }
+        })
+    }
+
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        writeAsync({ args: [groupName, address] });
-        setCreateGroup(!createGroup);
+        writeAsync();
+        setJoinGroup(!joinGroup);
+        enterGroup();
     }
 
     return (
         <>
             <button onClick={handleClick} className="btn">
-                Create Group
+                Join Group
             </button>
-            {createGroup && (
+            {joinGroup && (
                 <div>
                     <div className="card w-96 h-full bg-base-100 shadow-xl m-3">
                         <div className="card-body">
-                            <h2 className="card-title">Make a group</h2>
+                            <h2 className="card-title">Join a group</h2>
                             <form onSubmit={handleSubmit}>
                                 <div className="flex space-y-1 flex-col">
                                     <input
                                         className="input input-bordered w-full max-w-xs"
-                                        placeholder="Group name"
-                                        value={groupName}
-                                        onChange={e => setGroupName(e.target.value)}
+                                        placeholder="Group Address"
+                                        value={groupKey}
+                                        onChange={e => setGroupKey(e.target.value)}
                                         type="string"
                                         required
                                     />
@@ -56,5 +64,5 @@ export const CreateGroup = () => {
                 </div>
             )}
         </>
-    );
-};
+    )
+}
