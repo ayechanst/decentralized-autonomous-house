@@ -1,5 +1,7 @@
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import React, { useState } from 'react';
+import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+
 
 interface TaskProps {
     groupKeyProps: string,
@@ -8,12 +10,31 @@ interface TaskProps {
 export const AddTaskForm: React.FC<TaskProps & { onClose: () => void }> = ({ groupKeyProps, onClose }) => {
     const [taskName, setTaskName] = useState("");
     const [taskDescription, setTaskDescription] = useState("");
+    const [checkboxData, setCheckboxData] = useState<string[]>([]);
 
     const { writeAsync } = useScaffoldContractWrite({
         contractName: "YourContract",
         functionName: "createTask",
-        args: [taskName, taskDescription, groupKeyProps],
+        args: [taskName, taskDescription, groupKeyProps, checkboxData],
     });
+
+    const { data: peopleArray } = useScaffoldContractRead({
+        contractName: "YourContract",
+        functionName: "getPeople",
+        args: [groupKeyProps]
+    });
+
+    function handleCheckbox(name: string) {
+        setCheckboxData(prevNames => {
+            // if the array has the name, remove it
+            if (prevNames.includes(name)) {
+                return prevNames.filter(n => n !== name);
+            } else {
+                // if the array doesn't, add it
+                return [...prevNames, name];
+            }
+        });
+    }
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -45,6 +66,16 @@ export const AddTaskForm: React.FC<TaskProps & { onClose: () => void }> = ({ gro
                                 required
                             />
                         </div>
+                        {peopleArray?.map((name, index) => (
+                            <div key={index} className="py-1">
+                                {index}
+                                <label className="flex">
+                                    <input type="checkbox" className="checkbox" onChange={() => handleCheckbox(name)} />
+                                    <div className="px-3">{name.name}</div>
+                                </label>
+                            </div>
+                        ))}
+
                         <div className="py-5">
                             <button type="submit" className="btn">
                                 Add

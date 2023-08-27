@@ -17,7 +17,7 @@ contract YourContract {
 		string description;
 		uint256 grade;
 		bool init;
-		Person[] taskDoers;
+		string[] taskDoers;
 	}
 
 	struct Group {
@@ -109,8 +109,8 @@ contract YourContract {
 	function createTask(
 		string memory taskName,
 		string memory taskDescription,
-		address groupAddress
-		Person[] taskDoers;
+		address groupAddress,
+		string[] memory taskDoers
 	) public {
 		Task memory newTask;
 		newTask.name = taskName;
