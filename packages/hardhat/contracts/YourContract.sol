@@ -17,6 +17,7 @@ contract YourContract {
 		string description;
 		uint256 grade;
 		bool init;
+		Person[] taskDoers;
 	}
 
 	struct Group {
@@ -109,10 +110,12 @@ contract YourContract {
 		string memory taskName,
 		string memory taskDescription,
 		address groupAddress
+		Person[] taskDoers;
 	) public {
 		Task memory newTask;
 		newTask.name = taskName;
 		newTask.description = taskDescription;
+		newTask.taskDoers = taskDoers;
 		taskMapping[groupAddress].push(newTask);
 	}
 
