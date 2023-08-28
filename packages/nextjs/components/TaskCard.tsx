@@ -19,7 +19,7 @@ export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, group
     let taskParticipants: string[] = [];
     taskArray?.forEach((task) => {
         if (task.name === taskName) {
-            taskParticipants.push(...task.taskDoers);
+            taskParticipants.push(...task.taskParticipants);
         }
     })
 
@@ -33,11 +33,9 @@ export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, group
                     <div>{taskDescription}</div>
                     <div>Task Participants:</div>
                     <ul>
-                        {taskParticipants.map((participant, index) => {
-                            return (
-                                <li key={index}>{participant}</li>
-                            )
-                        })}
+                        {taskParticipants.map((participant, index) => (
+                            <li key={index}>{participant}</li>
+                        ))}
                     </ul>
                     <div className="card-actions justify-end">
                     </div>

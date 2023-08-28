@@ -26,10 +26,6 @@ export const Group: React.FC = () => {
         args: [groupKeyProps as string],
     });
 
-    taskArray?.forEach((task) => {
-        console.log(task.taskDoers);
-    })
-
     return (
         <>
             <div className="min-h-screen flex bg-gray-100">
@@ -71,7 +67,7 @@ export const Group: React.FC = () => {
                             return (
                                 <TaskCard taskName={task.name}
                                     taskDescription={task.description}
-                                    taskParticipants={task.taskDoers}
+                                    groupKeyProps={groupKeyProps as string}
                                 />
                             )
                         })}
