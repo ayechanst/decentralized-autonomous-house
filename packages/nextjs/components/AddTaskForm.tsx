@@ -12,6 +12,8 @@ export const AddTaskForm: React.FC<TaskProps & { onClose: () => void }> = ({ gro
     const [taskDescription, setTaskDescription] = useState("");
     const [checkboxData, setCheckboxData] = useState<string[]>([]);
 
+    console.log(checkboxData);
+
     const { writeAsync } = useScaffoldContractWrite({
         contractName: "YourContract",
         functionName: "createTask",
@@ -67,24 +69,27 @@ export const AddTaskForm: React.FC<TaskProps & { onClose: () => void }> = ({ gro
                             />
                         </div>
                         <div className="py-3" >Task Participants: </div>
-                        {peopleArray?.map((name) => (
-                            < label className = "flex" >
-                                    <input type="checkbox" className="checkbox" onChange={() => handleCheckbox(name)} />
-                                    <div className="px-3">{name.name}</div>
-                                </label>
+                        {peopleArray?.map((person) => (
+                            <label className="flex" >
+                                <input
+                                    type="checkbox"
+                                    className="checkbox"
+                                    onChange={() => handleCheckbox(person.name)} />
+                                <div className="px-3">{person.name}</div>
+                            </label>
                         ))}
 
-                    <div className="py-5">
-                        <button type="submit" className="btn">
-                            Add
-                        </button>
-                    </div>
-                </form>
+                        <div className="py-5">
+                            <button type="submit" className="btn">
+                                Add
+                            </button>
+                        </div>
+                    </form>
 
-                <div className="card-actions justify-end">
+                    <div className="card-actions justify-end">
+                    </div>
                 </div>
-            </div>
-        </div >
+            </div >
         </>
     )
 }

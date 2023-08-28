@@ -26,18 +26,40 @@ export const Group: React.FC = () => {
         args: [groupKeyProps as string],
     });
 
+    taskArray?.forEach((task) => {
+        console.log(task.taskDoers);
+    })
+
     return (
         <>
             <div className="min-h-screen flex bg-gray-100">
                 <div className="flex flex-col w-1/4 bg-white shadow-md p-4">
                     <h2 className="text-lg font-semibold mb-4">Sidebar</h2>
                     <ul className="space-y-2">
-                        <li><button onClick={() => setPersonForm(!personForm)} className="btn btn-primary w-full">Add Person</button></li>
-                        <li><button onClick={() => setTaskForm(!taskForm)} className="btn btn-primary w-full">Suggest Task</button></li>
-                        <li><button className="btn btn-primary w-full">Complete Task</button></li>
+                        <li>
+                            <button
+                                onClick={() => setPersonForm(!personForm)}
+                                className="btn btn-primary w-full">Add Person
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                onClick={() => setTaskForm(!taskForm)}
+                                className="btn btn-primary w-full">Suggest Task
+                            </button>
+                        </li>
+                        <li>
+                            <button className="btn btn-primary w-full">
+                                Complete Task
+                            </button>
+                        </li>
                     </ul>
-                    {personForm && <AddPersonForm groupKeyProps={groupKeyProps as string} onClose={closePersonForm} />}
-                    {taskForm && <AddTaskForm groupKeyProps={groupKeyProps as string} onClose={closeTaskForm} />}
+                    {personForm && <AddPersonForm
+                        groupKeyProps={groupKeyProps as string}
+                        onClose={closePersonForm} />}
+                    {taskForm && <AddTaskForm
+                        groupKeyProps={groupKeyProps as string}
+                        onClose={closeTaskForm} />}
                     {(!personForm && !taskForm) && <Stats groupKeyProps={groupKeyProps as string} />}
                 </div>
                 <div className="w-3/4 p-8">
@@ -47,7 +69,10 @@ export const Group: React.FC = () => {
                     <main>
                         {taskArray?.map((task) => {
                             return (
-                                <TaskCard taskName={task.name} taskDescription={task.description} />
+                                <TaskCard taskName={task.name}
+                                    taskDescription={task.description}
+                                    taskParticipants={task.taskDoers}
+                                />
                             )
                         })}
                         <div>main content</div>
