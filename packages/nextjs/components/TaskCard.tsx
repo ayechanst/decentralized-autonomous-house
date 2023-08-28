@@ -1,14 +1,29 @@
 import React from "react";
+import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
 interface TaskProps {
     taskName: string,
     taskDescription: string,
-    taskParticipants: string[],
+    groupKeyProps: string,
 }
 
-export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, taskParticipants }) => {
+export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, groupKeyProps }) => {
 
-    console.log(taskParticipants);
+    // this will return all tasks for this given group, not the one we want
+    const { data: taskArray } = useScaffoldContractRead({
+        contractName: "YourContract",
+        functionName: "getTasks",
+        args: [groupKeyProps]
+    });
+
+    let taskParticipants: string[] = [];
+    taskArray?.forEach((task) => {
+        if (task.name === taskName) {
+            taskParticipants.push(...task.taskDoers);
+        }
+    })
+
+    console.log(taskParticipants)
 
     return (
         <>
@@ -18,9 +33,11 @@ export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, taskP
                     <div>{taskDescription}</div>
                     <div>Task Participants:</div>
                     <ul>
-                        {taskParticipants.map((participant, index) => (
-                            <li key={index}>{participant}</li>
-                        ))}
+                        {taskParticipants.map((participant, index) => {
+                            return (
+                                <li key={index}>{participant}</li>
+                            )
+                        })}
                     </ul>
                     <div className="card-actions justify-end">
                     </div>
