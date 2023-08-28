@@ -12,8 +12,6 @@ export const AddTaskForm: React.FC<TaskProps & { onClose: () => void }> = ({ gro
     const [taskDescription, setTaskDescription] = useState("");
     const [checkboxData, setCheckboxData] = useState<string[]>([]);
 
-    console.log(checkboxData);
-
     const { writeAsync } = useScaffoldContractWrite({
         contractName: "YourContract",
         functionName: "createTask",

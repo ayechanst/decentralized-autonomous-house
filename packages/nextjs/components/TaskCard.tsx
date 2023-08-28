@@ -23,8 +23,6 @@ export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, group
         }
     })
 
-    console.log(taskParticipants)
-
     return (
         <>
             <div className="card w-96 bg-base-100 shadow-xl m-2">
@@ -41,6 +39,7 @@ export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, group
                     </div>
                 </div>
             </div>
+
         </>
     )
 }
