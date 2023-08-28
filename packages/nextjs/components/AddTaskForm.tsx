@@ -66,27 +66,25 @@ export const AddTaskForm: React.FC<TaskProps & { onClose: () => void }> = ({ gro
                                 required
                             />
                         </div>
-                        {peopleArray?.map((name, index) => (
-                            <div key={index} className="py-1">
-                                {index}
-                                <label className="flex">
+                        <div className="py-3" >Task Participants: </div>
+                        {peopleArray?.map((name) => (
+                            < label className = "flex" >
                                     <input type="checkbox" className="checkbox" onChange={() => handleCheckbox(name)} />
                                     <div className="px-3">{name.name}</div>
                                 </label>
-                            </div>
                         ))}
 
-                        <div className="py-5">
-                            <button type="submit" className="btn">
-                                Add
-                            </button>
-                        </div>
-                    </form>
-
-                    <div className="card-actions justify-end">
+                    <div className="py-5">
+                        <button type="submit" className="btn">
+                            Add
+                        </button>
                     </div>
+                </form>
+
+                <div className="card-actions justify-end">
                 </div>
             </div>
+        </div >
         </>
     )
 }
