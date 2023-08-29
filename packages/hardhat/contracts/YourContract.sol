@@ -151,6 +151,7 @@ contract YourContract {
 		newTask.name = taskName;
 		newTask.description = taskDescription;
 		newTask.taskParticipants = taskParticipants;
+		newTask.init = false;
 		taskMapping[groupAddress].push(newTask);
 	}
 

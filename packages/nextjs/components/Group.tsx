@@ -30,7 +30,7 @@ export const Group: React.FC = () => {
 
     // if tasks in taskArray have any init false, toggle notifs (for approval)
     taskArray?.forEach((task) => {
-        if (task.init == false) {
+        if (task.init == true) {
             setNotification(!notification);
         }
     })

@@ -1,6 +1,13 @@
 // import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+declare global {
+    interface Window {
+        my_modal_5: HTMLDialogElement;
+    }
+}
 
 export const Alert = () => {
+
+    const modalElement = window.my_modal_5 as HTMLDialogElement;
 
     return (
         <>
@@ -10,8 +17,18 @@ export const Alert = () => {
                     <h3 className="font-bold">New message!</h3>
                     <div className="text-xs">You have 1 unread message</div>
                 </div>
-                <button className="btn btn-sm">See</button>
+                <button className="btn" onClick={() => modalElement.showModal()}>open modal</button>
             </div>
+            <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+                <form method="dialog" className="modal-box">
+                    <h3 className="font-bold text-lg">Hello!</h3>
+                    <p className="py-4">Press ESC key or click the button below to close</p>
+                    <div className="modal-action">
+                        {/* if there is a button in form, it will close the modal */}
+                        <button className="btn">Close</button>
+                    </div>
+                </form>
+            </dialog>
         </>
     )
 }
