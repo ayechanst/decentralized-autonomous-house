@@ -5,12 +5,14 @@ import { useRouter } from "next/router";
 import { AddTaskForm } from "./AddTaskForm";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { TaskCard } from "./TaskCard";
+import { Alert } from "./Alert";
 
 export const Group: React.FC = () => {
     const router = useRouter();
     const groupKeyProps = router.query.propsToPass;
     const [personForm, setPersonForm] = useState(false);
     const [taskForm, setTaskForm] = useState(false);
+    const [notification, setNotification] = useState(false);
 
     const closePersonForm = () => {
         setPersonForm(false);
@@ -25,6 +27,14 @@ export const Group: React.FC = () => {
         functionName: "getTasks",
         args: [groupKeyProps as string],
     });
+
+    // if tasks in taskArray have any init false, toggle notifs (for approval)
+    taskArray?.forEach((task) => {
+        if (task.init == false) {
+            setNotification(!notification);
+        }
+    })
+    // if any task is marked as complete, toggle notifs (for grading)
 
     return (
         <>
@@ -61,6 +71,9 @@ export const Group: React.FC = () => {
                 <div className="w-3/4 p-8">
                     <header className="bg-white shadow-md p-4">
                         <h1 className="text-black text-xl font-semibold">Group Key: {groupKeyProps}</h1>
+                        {notification &&
+                            <Alert />
+                        }
                     </header>
                     <main>
                         {taskArray?.map((task) => {

@@ -1,4 +1,7 @@
+// import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+
 export const Alert = () => {
+
     return (
         <>
             <div className="alert shadow-lg">
