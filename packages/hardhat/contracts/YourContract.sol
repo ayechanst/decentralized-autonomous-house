@@ -125,6 +125,14 @@ contract YourContract {
 		string[] memory taskParticipants,
 		string taskName
 	) public {
+		Task[] memory tasks = taskMapping[key];
+		Task memory currentTask;
+		for (uint256 i = 0; i < tasks.length; i++) {
+			if (keccak256(abi.encode(tasks[i].name)) == keccak256(abi.encode(taskName))) {
+				currentTask = tasks[i];
+			}
+		}
+		uint256 numOfParticipants = currentTask.taskParticipants.length;
 
 	}
 
