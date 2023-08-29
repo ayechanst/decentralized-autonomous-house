@@ -12,7 +12,6 @@ export const AddPersonForm: React.FC<StatProps & { onClose: () => void }> = ({ g
     const { writeAsync } = useScaffoldContractWrite({
         contractName: "YourContract",
         functionName: "addPerson",
-        // string, address
         args: [personName, personAddress, groupKeyProps],
     });
 

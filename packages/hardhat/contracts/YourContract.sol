@@ -123,7 +123,7 @@ contract YourContract {
 	function nextPersonsTurn(
 		address key,
 		string[] memory taskParticipants,
-		string taskName
+		string memory taskName
 	) public {
 		Task[] memory tasks = taskMapping[key];
 		Task memory currentTask;
@@ -133,11 +133,26 @@ contract YourContract {
 			}
 		}
 		uint256 numOfParticipants = currentTask.taskParticipants.length;
-
+		uint256 counter = 0;
+		currentTask.personsTurn = counter;
+		if (currentTask.personsTurn < numOfParticipants) {
+			counter++;
+		} else {
+			counter = 0;
+		}
 	}
 
 	function getTasks(address key) public view returns (Task[] memory) {
 		return taskMapping[key];
 	}
+
+
+
+
+
+
+
+
+
 
 }

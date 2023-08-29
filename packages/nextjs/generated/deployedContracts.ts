@@ -5,7 +5,7 @@ const contracts = {
       name: "localhost",
       contracts: {
         YourContract: {
-          address: "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
+          address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
           abi: [
             {
               inputs: [
@@ -243,6 +243,11 @@ const contracts = {
                       name: "taskParticipants",
                       type: "string[]",
                     },
+                    {
+                      internalType: "uint256",
+                      name: "personsTurn",
+                      type: "uint256",
+                    },
                   ],
                   internalType: "struct YourContract.Task[]",
                   name: "",
@@ -295,6 +300,29 @@ const contracts = {
                 },
               ],
               name: "joinGroup",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "key",
+                  type: "address",
+                },
+                {
+                  internalType: "string[]",
+                  name: "taskParticipants",
+                  type: "string[]",
+                },
+                {
+                  internalType: "string",
+                  name: "taskName",
+                  type: "string",
+                },
+              ],
+              name: "nextPersonsTurn",
               outputs: [],
               stateMutability: "nonpayable",
               type: "function",
@@ -372,6 +400,11 @@ const contracts = {
                   internalType: "bool",
                   name: "init",
                   type: "bool",
+                },
+                {
+                  internalType: "uint256",
+                  name: "personsTurn",
+                  type: "uint256",
                 },
               ],
               stateMutability: "view",
