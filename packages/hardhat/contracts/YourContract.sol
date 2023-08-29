@@ -18,6 +18,7 @@ contract YourContract {
 		uint256 grade;
 		bool init;
 		string[] taskParticipants;
+		uint256 personsTurn;
 	}
 
 	struct Group {
@@ -117,6 +118,14 @@ contract YourContract {
 		newTask.description = taskDescription;
 		newTask.taskParticipants = taskParticipants;
 		taskMapping[groupAddress].push(newTask);
+	}
+
+	function nextPersonsTurn(
+		address key,
+		string[] memory taskParticipants,
+		string taskName
+	) public {
+
 	}
 
 	function getTasks(address key) public view returns (Task[] memory) {
