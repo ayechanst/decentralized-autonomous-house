@@ -35,6 +35,10 @@ contract YourContract {
 
 	Group[] public groups;
 
+	//********************************
+	// Group Related Functions
+	//********************************
+
 	function createGroup(string memory groupName, address creator) public {
 		Group memory newGroup;
 		newGroup.name = groupName;
@@ -96,6 +100,10 @@ contract YourContract {
     return newArr;
 }
 
+	//********************************
+	// People Related Functions
+	//********************************
+
 	function addPerson(string memory name, address personAddress, address groupAddress) public {
 		Person memory newPerson;
 		newPerson.name = name;
@@ -105,19 +113,6 @@ contract YourContract {
 
 	function getPeople(address key) public view returns (Person[] memory) {
 		return peopleMapping[key];
-	}
-
-	function createTask(
-		string memory taskName,
-		string memory taskDescription,
-		address groupAddress,
-		string[] memory taskParticipants
-	) public {
-		Task memory newTask;
-		newTask.name = taskName;
-		newTask.description = taskDescription;
-		newTask.taskParticipants = taskParticipants;
-		taskMapping[groupAddress].push(newTask);
 	}
 
 	function nextPersonsTurn(
@@ -142,12 +137,26 @@ contract YourContract {
 		}
 	}
 
+	//********************************
+	// Task Related Functions
+	//********************************
+
+	function createTask(
+		string memory taskName,
+		string memory taskDescription,
+		address groupAddress,
+		string[] memory taskParticipants
+	) public {
+		Task memory newTask;
+		newTask.name = taskName;
+		newTask.description = taskDescription;
+		newTask.taskParticipants = taskParticipants;
+		taskMapping[groupAddress].push(newTask);
+	}
+
 	function getTasks(address key) public view returns (Task[] memory) {
 		return taskMapping[key];
 	}
-
-
-
 
 
 

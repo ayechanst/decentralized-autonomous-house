@@ -9,7 +9,6 @@ interface TaskProps {
 
 export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, groupKeyProps }) => {
 
-    // this will return all tasks for this given group, not the one we want
     const { data: taskArray } = useScaffoldContractRead({
         contractName: "YourContract",
         functionName: "getTasks",
