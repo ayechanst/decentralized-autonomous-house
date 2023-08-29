@@ -5,7 +5,7 @@ const contracts = {
       name: "localhost",
       contracts: {
         YourContract: {
-          address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+          address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
           abi: [
             {
               inputs: [
@@ -234,9 +234,9 @@ const contracts = {
                       type: "uint256",
                     },
                     {
-                      internalType: "bool",
-                      name: "init",
-                      type: "bool",
+                      internalType: "enum YourContract.Status",
+                      name: "taskStatus",
+                      type: "uint8",
                     },
                     {
                       internalType: "string[]",
@@ -246,6 +246,16 @@ const contracts = {
                     {
                       internalType: "uint256",
                       name: "personsTurn",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "upVote",
+                      type: "uint256",
+                    },
+                    {
+                      internalType: "uint256",
+                      name: "downVote",
                       type: "uint256",
                     },
                   ],
@@ -397,17 +407,50 @@ const contracts = {
                   type: "uint256",
                 },
                 {
-                  internalType: "bool",
-                  name: "init",
-                  type: "bool",
+                  internalType: "enum YourContract.Status",
+                  name: "taskStatus",
+                  type: "uint8",
                 },
                 {
                   internalType: "uint256",
                   name: "personsTurn",
                   type: "uint256",
                 },
+                {
+                  internalType: "uint256",
+                  name: "upVote",
+                  type: "uint256",
+                },
+                {
+                  internalType: "uint256",
+                  name: "downVote",
+                  type: "uint256",
+                },
               ],
               stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "address",
+                  name: "key",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "taskName",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "vote",
+                  type: "uint256",
+                },
+              ],
+              name: "vote",
+              outputs: [],
+              stateMutability: "nonpayable",
               type: "function",
             },
           ],

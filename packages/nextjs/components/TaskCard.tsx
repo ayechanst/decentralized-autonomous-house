@@ -37,6 +37,18 @@ export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, group
         }
     })
 
+    // must submit numbers
+    function handleVote(answer) {
+        // up votes
+        if (answer === "yes") {
+            // write yes
+        } else if (answer === "no") {
+            // write no
+        } else {
+            console.log("error");
+        }
+    }
+
     return (
         <>
             <div className="card w-96 bg-base-100 shadow-xl m-2">
@@ -51,8 +63,8 @@ export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, group
                     </ul>
                     {vote && (
                         <>
-                            <button className="btn">Approve</button>
-                            <button className="btn">Dissaprove</button>
+                            <button className="btn" onClick={() => handleVote('yes')}>Approve</button>
+                            <button className="btn" onClick={() => handleVote('no')}>Dissaprove</button>
                         </>
                     )
                     }

@@ -5,6 +5,13 @@ pragma solidity >=0.8.0 <0.9.0;
 import "hardhat/console.sol";
 
 contract YourContract {
+
+	enum Status {
+		Pending,
+		Accepted,
+		Rejected
+	}
+
 	struct Person {
 		string name;
 		address personAddress;
@@ -16,9 +23,11 @@ contract YourContract {
 		string name;
 		string description;
 		uint256 grade;
-		bool init;
+		Status taskStatus;
 		string[] taskParticipants;
 		uint256 personsTurn;
+		uint256 upVote;
+		uint256 downVote;
 	}
 
 	struct Group {
@@ -151,7 +160,7 @@ contract YourContract {
 		newTask.name = taskName;
 		newTask.description = taskDescription;
 		newTask.taskParticipants = taskParticipants;
-		newTask.init = false;
+		newTask.taskStatus = Status.Pending;
 		taskMapping[groupAddress].push(newTask);
 	}
 
@@ -159,7 +168,33 @@ contract YourContract {
 		return taskMapping[key];
 	}
 
-
+	function vote(
+		address key,
+		string memory taskName,
+	  uint256 vote
+  ) public {
+		Task[] memory tasks = taskMapping[key];
+		Task memory currentTask;
+		for (uint256 i = 0; i < tasks.length; i++) {
+			if (keccak256(abi.encode(tasks[i].name)) == keccak256(abi.encode(taskName))) {
+				currentTask = tasks[i];
+			}
+		}
+		if (vote == 0) {
+			currentTask.downVote = currentTask.downVote + 1;
+		} else {
+			currentTask.upVote = currentTask.upVote + 1;
+		}
+		uint256 numOfParticipants = currentTask.taskParticipants.length;
+		uint256 totalVotes = currentTask.downVote + currentTask.upVote;
+		if (totalVotes == numOfParticipants) {
+			if (currentTask.upVote > currentTask.downVote) {
+				currentTask.taskStatus = Status.Accepted;
+			} else {
+				currentTask.taskStatus = Status.Rejected;
+			}
+		}
+	}
 
 
 
