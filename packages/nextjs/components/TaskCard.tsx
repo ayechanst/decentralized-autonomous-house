@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
 interface TaskProps {
@@ -8,12 +8,27 @@ interface TaskProps {
 }
 
 export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, groupKeyProps }) => {
+    const [vote, setVote] = useState(false);
 
     const { data: taskArray } = useScaffoldContractRead({
         contractName: "YourContract",
         functionName: "getTasks",
         args: [groupKeyProps]
     });
+
+    useEffect(() => {
+        if (taskArray) {
+            taskArray?.forEach((task) => {
+                if (task.name === taskName) {
+                    if (task.init === false) {
+                        setVote(true);
+                    } else {
+                        setVote(false);
+                    }
+                }
+            })
+        }
+    }, [taskArray, taskName, vote])
 
     let taskParticipants: string[] = [];
     taskArray?.forEach((task) => {
@@ -34,6 +49,13 @@ export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, group
                             <li key={index}>{participant}</li>
                         ))}
                     </ul>
+                    {vote && (
+                        <>
+                            <button className="btn">Approve</button>
+                            <button className="btn">Dissaprove</button>
+                        </>
+                    )
+                    }
                     <div className="card-actions justify-end">
                     </div>
                 </div>
