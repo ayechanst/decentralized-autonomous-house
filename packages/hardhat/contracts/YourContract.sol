@@ -168,6 +168,8 @@ contract YourContract {
 		return taskMapping[key];
 	}
 
+	event VoteCounts(uint256 upVote, uint256 downVote);
+
 	function vote(
 		address key,
 		string memory taskName,
@@ -187,6 +189,7 @@ contract YourContract {
 		} else {
 			require(false, "not a good input");
 		}
+		emit VoteCounts(currentTask.downVote, currentTask.upVote);
 		uint256 numOfParticipants = currentTask.taskParticipants.length;
 		uint256 totalVotes = currentTask.downVote + currentTask.upVote;
 		if (totalVotes == numOfParticipants) {
@@ -197,7 +200,6 @@ contract YourContract {
 			}
 		}
 	}
-
 
 
 

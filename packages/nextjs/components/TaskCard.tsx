@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { SolidityProtectedKeywordError } from "viem";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
@@ -12,6 +11,9 @@ interface TaskProps {
 export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, groupKeyProps }) => {
     const [vote, setVote] = useState(false);
     const [voteChoice, setVoteChoice] = useState(0);
+    const [displayTask, setDisplayTask] = useState(true);
+
+    console.log(voteChoice);
 
     const { data: taskArray } = useScaffoldContractRead({
         contractName: "YourContract",
@@ -22,7 +24,7 @@ export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, group
     const { writeAsync } = useScaffoldContractWrite({
         contractName: "YourContract",
         functionName: "vote",
-        args: [groupKeyProps, taskName, vote],
+        args: [groupKeyProps, taskName, BigInt(voteChoice)]
     });
 
     enum Status {
@@ -42,7 +44,14 @@ export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, group
             const matchingTask = taskArray.find(task => task.name === taskName);
             if (matchingTask) {
                 const tsStatus = solidityToTSStatusMap[matchingTask.taskStatus];
-                setVote(tsStatus === Status.Pending);
+                console.log(tsStatus);
+                if (tsStatus === Status.Pending) {
+                    setVote(true);
+                } else if (tsStatus === Status.Accepted) {
+                    setVote(false);
+                } else {
+                    setDisplayTask(false);
+                }
             }
         }
     }, [taskArray, taskName])
@@ -68,30 +77,32 @@ export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, group
         }
     }
 
+
     return (
         <>
-            <div className="card w-96 bg-base-100 shadow-xl m-2">
-                <div className="card-body">
-                    <h2 className="card-title">{taskName}</h2>
-                    <div>{taskDescription}</div>
-                    <div>Task Participants:</div>
-                    <ul>
-                        {taskParticipants.map((participant, index) => (
-                            <li key={index}>{participant}</li>
-                        ))}
-                    </ul>
-                    {vote && (
-                        <>
-                            <button className="btn" onClick={() => handleVote('yes')}>Approve</button>
-                            <button className="btn" onClick={() => handleVote('no')}>Dissaprove</button>
-                        </>
-                    )
-                    }
-                    <div className="card-actions justify-end">
+            {displayTask &&
+                <div className="card w-96 bg-base-100 shadow-xl m-2">
+                    <div className="card-body">
+                        <h2 className="card-title">{taskName}</h2>
+                        <div>{taskDescription}</div>
+                        <div>Task Participants:</div>
+                        <ul>
+                            {taskParticipants.map((participant, index) => (
+                                <li key={index}>{participant}</li>
+                            ))}
+                        </ul>
+                        {vote && (
+                            <>
+                                <button className="btn" onClick={() => handleVote('yes')}>Approve</button>
+                                <button className="btn" onClick={() => handleVote('no')}>Dissaprove</button>
+                            </>
+                        )
+                        }
+                        <div className="card-actions justify-end">
+                        </div>
                     </div>
                 </div>
-            </div>
-
+            }
         </>
     )
 }

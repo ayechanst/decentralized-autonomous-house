@@ -5,8 +5,27 @@ const contracts = {
       name: "localhost",
       contracts: {
         YourContract: {
-          address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+          address: "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
           abi: [
+            {
+              anonymous: false,
+              inputs: [
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "upVote",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "downVote",
+                  type: "uint256",
+                },
+              ],
+              name: "VoteCounts",
+              type: "event",
+            },
             {
               inputs: [
                 {
