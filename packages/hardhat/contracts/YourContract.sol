@@ -180,10 +180,12 @@ contract YourContract {
 				currentTask = tasks[i];
 			}
 		}
-		if (vote == 0) {
+		if (vote == 2) {
 			currentTask.downVote = currentTask.downVote + 1;
-		} else {
+		} else if (vote == 1) {
 			currentTask.upVote = currentTask.upVote + 1;
+		} else {
+			require(false, "not a good input");
 		}
 		uint256 numOfParticipants = currentTask.taskParticipants.length;
 		uint256 totalVotes = currentTask.downVote + currentTask.upVote;

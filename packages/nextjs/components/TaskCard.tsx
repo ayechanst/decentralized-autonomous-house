@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 interface TaskProps {
     taskName: string,
@@ -9,6 +10,7 @@ interface TaskProps {
 
 export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, groupKeyProps }) => {
     const [vote, setVote] = useState(false);
+    const [voteChoice, setVoteChoice] = useState(0);
 
     const { data: taskArray } = useScaffoldContractRead({
         contractName: "YourContract",
@@ -16,11 +18,17 @@ export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, group
         args: [groupKeyProps]
     });
 
+    const { writeAsync } = useScaffoldContractWrite({
+        contractName: "YourContract",
+        functionName: "vote",
+        args: [groupKeyProps, taskName, vote],
+    });
+
     useEffect(() => {
         if (taskArray) {
             taskArray?.forEach((task) => {
                 if (task.name === taskName) {
-                    if (task.init === false) {
+                    if (task.taskStatus === "Pending") {
                         setVote(true);
                     } else {
                         setVote(false);
@@ -38,12 +46,14 @@ export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, group
     })
 
     // must submit numbers
-    function handleVote(answer) {
+    function handleVote(answer: string) {
         // up votes
         if (answer === "yes") {
-            // write yes
+            setVoteChoice(1);
+            writeAsync();
         } else if (answer === "no") {
-            // write no
+            setVoteChoice(2);
+            writeAsync();
         } else {
             console.log("error");
         }
