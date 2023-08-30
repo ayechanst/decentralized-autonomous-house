@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { SolidityProtectedKeywordError } from "viem";
 import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
@@ -24,19 +25,27 @@ export const TaskCard: React.FC<TaskProps> = ({ taskName, taskDescription, group
         args: [groupKeyProps, taskName, vote],
     });
 
+    enum Status {
+        Pending,
+        Accepted,
+        Rejected
+    }
+
+    const solidityToTSStatusMap: Record<number, Status> = {
+        0: Status.Pending,
+        1: Status.Accepted,
+        2: Status.Rejected
+    }
+
     useEffect(() => {
         if (taskArray) {
-            taskArray?.forEach((task) => {
-                if (task.name === taskName) {
-                    if (task.taskStatus === "Pending") {
-                        setVote(true);
-                    } else {
-                        setVote(false);
-                    }
-                }
-            })
+            const matchingTask = taskArray.find(task => task.name === taskName);
+            if (matchingTask) {
+                const tsStatus = solidityToTSStatusMap[matchingTask.taskStatus];
+                setVote(tsStatus === Status.Pending);
+            }
         }
-    }, [taskArray, taskName, vote])
+    }, [taskArray, taskName])
 
     let taskParticipants: string[] = [];
     taskArray?.forEach((task) => {
