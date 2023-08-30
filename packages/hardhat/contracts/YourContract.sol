@@ -184,8 +184,10 @@ contract YourContract {
 		}
 		if (vote == 2) {
 			currentTask.downVote = currentTask.downVote + 1;
+			console.log(currentTask.downVote);
 		} else if (vote == 1) {
 			currentTask.upVote = currentTask.upVote + 1;
+			console.log(currentTask.upVote);
 		} else {
 			require(false, "not a good input");
 		}
