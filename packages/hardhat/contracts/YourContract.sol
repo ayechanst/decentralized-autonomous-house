@@ -173,7 +173,7 @@ contract YourContract {
 	function vote(
 		address key,
 		string memory taskName,
-	  uint256 vote
+		uint256 vote
   ) public {
 		Task[] memory tasks = taskMapping[key];
 		Task memory currentTask;

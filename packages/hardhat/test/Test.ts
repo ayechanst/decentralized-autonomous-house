@@ -2,7 +2,7 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("YourContract", function () {
-  let yourContract;
+  let yourContract: any;
 
   beforeEach(async () => {
     const YourContract = await ethers.getContractFactory("YourContract");
