@@ -53,6 +53,12 @@ contract YourContract {
 		taskVotingQue.push(newTask);
 	}
 
+	function voteOnTask(address voter, uint256 vote) public {
+		Task storage taskInQuestion = taskVotingQue[0]
+	}
+
+
+
 	function getTasks(address key) public view returns (Task[] memory) {
 		return taskMapping[key];
 	}
