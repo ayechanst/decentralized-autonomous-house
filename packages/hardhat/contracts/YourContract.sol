@@ -36,7 +36,6 @@ contract YourContract {
 		address key;
 		uint256 balance;
 
-
 	}
 
 	// use Group.key to get the array of people
