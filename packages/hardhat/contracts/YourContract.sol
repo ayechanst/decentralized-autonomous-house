@@ -14,8 +14,8 @@ contract YourContract {
 
 	struct Person {
 		string name;
-		address personAddress;
 		uint256 balance;
+		address personAddress;
 		uint256 reputation;
 	}
 
@@ -113,7 +113,10 @@ contract YourContract {
 	// People Related Functions
 	//********************************
 
-	function addPerson(string memory name, address personAddress, address groupAddress) public {
+	function addPerson(string memory name,
+					   address personAddress,
+					   address groupAddress
+	) public {
 		Person memory newPerson;
 		newPerson.name = name;
 		newPerson.personAddress = personAddress;
