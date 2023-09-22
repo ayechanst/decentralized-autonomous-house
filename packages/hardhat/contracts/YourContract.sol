@@ -39,10 +39,9 @@ contract YourContract {
 	// Task Related Functions
 	//********************************
 
-	function createTask(
+	function suggestTask(
 		string memory taskName,
 		string memory taskDescription,
-		address groupAddress,
 		string[] memory taskParticipants
 	) public {
 		Task memory newTask;
@@ -54,10 +53,8 @@ contract YourContract {
 	}
 
 	function voteOnTask(address voter, uint256 vote) public {
-		Task storage taskInQuestion = taskVotingQue[0]
+		Task storage taskInQuestion = taskVotingQue[0];
 	}
-
-
 
 	function getTasks(address key) public view returns (Task[] memory) {
 		return taskMapping[key];
