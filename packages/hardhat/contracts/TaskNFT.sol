@@ -8,15 +8,22 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 contract TaskNFT is ERC721, ERC721Enumerable, Pausable, Ownable {
+
+    // ====== 1. Property Variables ====== //
+
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIdCounter;
+
+    // ====== 2. Lifecycle Variables ====== //
 
     constructor() ERC721("TaskNFT", "TSK") {}
 
     function _baseURI() internal pure override returns (string memory) {
         return "ipsf://TaskNFTBaseURI/";
     }
+
+    // ====== 3. Pauseable Functions ====== //
 
     function pause() public onlyOwner {
         _pause();
@@ -26,6 +33,8 @@ contract TaskNFT is ERC721, ERC721Enumerable, Pausable, Ownable {
         _unpause();
     }
 
+    // ====== 4. Minting Functions ====== //
+    //
     function safeMint(address to) public onlyOwner {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
@@ -39,6 +48,8 @@ contract TaskNFT is ERC721, ERC721Enumerable, Pausable, Ownable {
     {
         super._beforeTokenTransfer(from, to, tokenId, batchSize);
     }
+
+    // ====== 5. Other Functions ====== //
 
     // The following functions are overrides required by Solidity.
 
