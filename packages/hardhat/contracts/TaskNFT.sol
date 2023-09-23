@@ -34,8 +34,8 @@ contract TaskNFT is ERC721, ERC721Enumerable, Pausable, Ownable {
     }
 
     // ====== 4. Minting Functions ====== //
-    //
-    function safeMint(address to) public onlyOwner {
+
+    function safeMint(address to) public payable onlyOwner {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
