@@ -7,15 +7,11 @@ import "TaskNFT.sol"
 
 contract YourContract {
 
-	struct Person {
-		string name;
-		address personAddress;
-		uint256 balance;
-		uint256 reputation;
-	}
+	mapping(address => bool) public isMember;
 
-	mapping(address => Person[]) public peopleMapping;
-	Task[] public taskVotingQue;
-	uint256 treasury;
+	modifier onlyMember() {
+		require(isMember[msg.sender], "You are not a member of the DAO.");
+		_;
+	}
 
 }
