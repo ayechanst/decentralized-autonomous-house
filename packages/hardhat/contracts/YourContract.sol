@@ -44,15 +44,15 @@ contract YourContract {
 
 	// TODO: Members can only vote once, make it so they cant vote twice
 	function voteOnTask(uint256 vote) external onlyMember {
-		address[] alreadyVoted;
+		address[] memory alreadyVoted = new address[](numOfMembers);
 		// TODO: fix 47 and 49, no push method on memory
-		alreadyVoted.push(msg.sender);
+		alreadyVoted[alreadyVoted.length - 1] = msg.sender;
 		for (uint256 i = 0; i < alreadyVoted.length; i++) {
 			require(alreadyVoted[i] != msg.sender, "You already voted");
 		}
 		Task memory taskBeingVoted = taskVotingQue[taskVotingQue.length];
 		if (vote > minVotes) {
-			// call the mint function passing in votingTask
+			// call the mint function passing in taskBeingVoted
 		}
 	}
 
