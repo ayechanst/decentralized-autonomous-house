@@ -3,6 +3,7 @@ pragma solidity >=0.8.0 <0.9.0;
 
 // Useful for debugging. Remove when deploying to a live network.
 import "hardhat/console.sol";
+import "./TaskNFT.sol";
 
 contract YourContract {
 
@@ -12,7 +13,7 @@ contract YourContract {
 		uint256 taskWeight;
 	}
 
-	uint256 numOfMembers = 0;
+	uint256 numOfMembers;
 	uint256 minVotes = numOfMembers / 2;
 	mapping(address => bool) public isMember;
 	Task[] taskVotingQue;
@@ -42,15 +43,14 @@ contract YourContract {
 		taskVotingQue.push(newTask);
 	}
 
-	// TODO: Members can only vote once, make it so they cant vote twice
 	function voteOnTask(uint256 vote) external onlyMember {
 		address[] memory alreadyVoted = new address[](numOfMembers);
-		// TODO: fix 47 and 49, no push method on memory
 		alreadyVoted[alreadyVoted.length - 1] = msg.sender;
 		for (uint256 i = 0; i < alreadyVoted.length; i++) {
 			require(alreadyVoted[i] != msg.sender, "You already voted");
 		}
-		Task memory taskBeingVoted = taskVotingQue[taskVotingQue.length];
+		Task memory taskBeingVoted = taskVotingQue[taskVotingQue.length - 1];
+		// TODO: turn task struct into JSON? Then pass the JSON into the mint function?
 		if (vote > minVotes) {
 			// call the mint function passing in taskBeingVoted
 		}
