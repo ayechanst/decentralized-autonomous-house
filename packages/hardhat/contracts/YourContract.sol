@@ -51,6 +51,7 @@ contract YourContract {
 		}
 		Task memory taskBeingVoted = taskVotingQue[taskVotingQue.length - 1];
 		// TODO: turn task struct into JSON? Then pass the JSON into the mint function?
+		// TODO: store the meta data on ipfs somehow?
 		if (vote > minVotes) {
 			// call the mint function passing in taskBeingVoted
 		}
