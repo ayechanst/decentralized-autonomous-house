@@ -14,10 +14,10 @@ contract YourContract {
 	}
 
 	TaskNFT public taskNFT;
-	uint256 numOfMembers;
-	uint256 minVotes = numOfMembers / 2;
+	uint256 public numOfMembers;
+	uint256 public minVotes = numOfMembers / 2;
 	mapping(address => bool) public isMember;
-	Task[] taskVotingQue;
+	Task[] public taskVotingQue;
 
 	modifier onlyMember() {
 		require(isMember[msg.sender], "You are not a member of the DAO.");
@@ -51,8 +51,6 @@ contract YourContract {
 			require(alreadyVoted[i] != msg.sender, "You already voted");
 		}
 		Task memory taskBeingVoted = taskVotingQue[taskVotingQue.length - 1];
-		// TODO: turn task struct into JSON? Then pass the JSON into the mint function?
-		// TODO: store the meta data on ipfs somehow?
 		if (vote > minVotes) {
 			// call the mint function passing in taskBeingVoted
 		}
