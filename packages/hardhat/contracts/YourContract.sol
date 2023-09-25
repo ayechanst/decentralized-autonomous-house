@@ -13,6 +13,7 @@ contract YourContract {
 		uint256 taskWeight;
 	}
 
+	TaskNFT public taskNFT;
 	uint256 numOfMembers;
 	uint256 minVotes = numOfMembers / 2;
 	mapping(address => bool) public isMember;
