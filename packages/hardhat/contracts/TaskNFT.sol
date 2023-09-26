@@ -17,7 +17,7 @@ contract TaskNFT is ERC721, Ownable {
         uint256 taskWeight;
     }
 
-    mapping(uint256 => Task) public metadata;
+    mapping(bytes32 => Task) public metadata;
 
     function safeMint(address to) public onlyOwner {
         uint256 tokenId = _tokenIdCounter.current();
@@ -26,7 +26,7 @@ contract TaskNFT is ERC721, Ownable {
     }
 
     function addTask(
-        uint256 tokenID,
+        bytes32 taskID,
         string memory taskName,
         string memory taskDescription,
         uint256 taskWeight
@@ -36,7 +36,7 @@ contract TaskNFT is ERC721, Ownable {
             taskDescription: taskDescription,
             taskWeight: taskWeight
            });
-       metadata[tokenID] = newTask;
+       metadata[taskID] = newTask;
     }
 
 }

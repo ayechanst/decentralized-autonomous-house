@@ -15,7 +15,9 @@ contract YourContract {
     TaskNFT public taskNFT;
     uint256 public numOfMembers;
     uint256 public minVotes = numOfMembers / 2;
+
     mapping(address => bool) public isMember;
+
     Task[] public taskVotingQue;
 
     modifier onlyMember() {
@@ -52,9 +54,15 @@ contract YourContract {
         for (uint256 i = 0; i < alreadyVoted.length; i++) {
             require(alreadyVoted[i] != msg.sender, "You already voted");
         }
-        Task memory taskBeingVoted = taskVotingQue[taskVotingQue.length - 1];
+        Task storage taskBeingVoted = taskVotingQue[taskVotingQue.length - 1];
+        bytes32 taskID = keccak256(abi.encode(taskBeingVoted.taskDescription));
         if (vote > minVotes) {
-
+            taskNFT.addTask(
+                taskID,
+                taskBeingVoted.taskName,
+                taskBeingVoted.taskDescription,
+                taskBeingVoted.taskWeight
+            );
         }
     }
     

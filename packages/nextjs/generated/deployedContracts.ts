@@ -5,7 +5,7 @@ const contracts = {
       name: "localhost",
       contracts: {
         TaskNFT: {
-          address: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+          address: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
           abi: [
             {
               inputs: [],
@@ -109,6 +109,34 @@ const contracts = {
             {
               inputs: [
                 {
+                  internalType: "bytes32",
+                  name: "taskID",
+                  type: "bytes32",
+                },
+                {
+                  internalType: "string",
+                  name: "taskName",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "taskDescription",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "taskWeight",
+                  type: "uint256",
+                },
+              ],
+              name: "addTask",
+              outputs: [],
+              stateMutability: "nonpayable",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
                   internalType: "address",
                   name: "to",
                   type: "address",
@@ -181,6 +209,35 @@ const contracts = {
                   internalType: "bool",
                   name: "",
                   type: "bool",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "bytes32",
+                  name: "",
+                  type: "bytes32",
+                },
+              ],
+              name: "metadata",
+              outputs: [
+                {
+                  internalType: "string",
+                  name: "taskName",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "taskDescription",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "taskWeight",
+                  type: "uint256",
                 },
               ],
               stateMutability: "view",
@@ -410,7 +467,7 @@ const contracts = {
           ],
         },
         YourContract: {
-          address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+          address: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
           abi: [
             {
               inputs: [
@@ -533,26 +590,6 @@ const contracts = {
                 },
               ],
               stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [],
-              name: "testResult",
-              outputs: [
-                {
-                  internalType: "string",
-                  name: "",
-                  type: "string",
-                },
-              ],
-              stateMutability: "view",
-              type: "function",
-            },
-            {
-              inputs: [],
-              name: "testTaskToJSON",
-              outputs: [],
-              stateMutability: "nonpayable",
               type: "function",
             },
             {
