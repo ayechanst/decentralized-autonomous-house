@@ -54,7 +54,9 @@ contract YourContract {
         }
         Task memory taskBeingVoted = taskVotingQue[taskVotingQue.length - 1];
         if (vote > minVotes) {
-            // call the mint function passing in taskBeingVoted
+            // this could be called from the front end to upload the json
+            // to ipfs, then the nft minting continues as usual
+            string memory jsonTask = structToJSON(taskBeingVoted);
         }
     }
     
