@@ -6,58 +6,62 @@ import "hardhat/console.sol";
 import "./TaskNFT.sol";
 
 contract YourContract {
+    struct Task {
+        string taskName;
+        string taskDescription;
+        uint256 taskWeight;
+    }
 
-	struct Task {
-		string taskName;
-		string taskDescription;
-		uint256 taskWeight;
-	}
+    TaskNFT public taskNFT;
+    uint256 public numOfMembers;
+    uint256 public minVotes = numOfMembers / 2;
+    mapping(address => bool) public isMember;
+    Task[] public taskVotingQue;
 
-	TaskNFT public taskNFT;
-	uint256 public numOfMembers;
-	uint256 public minVotes = numOfMembers / 2;
-	mapping(address => bool) public isMember;
-	Task[] public taskVotingQue;
+    modifier onlyMember() {
+        require(isMember[msg.sender], "You are not a member of the DAO.");
+        _;
+    }
 
-	modifier onlyMember() {
-		require(isMember[msg.sender], "You are not a member of the DAO.");
-		_;
-	}
+    function addMember(address newMember) external {
+        require(
+            !isMember[newMember],
+            "Address is already a member of the DAO."
+        );
+        isMember[msg.sender] = true;
+        numOfMembers++;
+    }
 
-	function addMember(address newMember) external {
-		require(!isMember[newMember], "Address is already a member of the DAO.");
-		isMember[msg.sender] = true;
-		numOfMembers++;
-	}
+    function suggestTask(
+        string memory taskName,
+        string memory taskDescription,
+        uint256 taskWeight
+    ) public onlyMember {
+        require(taskWeight < 11, "Task cannot weigh more than 10 units.");
+        Task memory newTask = Task({
+            taskName: taskName,
+            taskDescription: taskDescription,
+            taskWeight: taskWeight
+        });
+        taskVotingQue.push(newTask);
+    }
 
-	function suggestTask(
-		string memory taskName,
-		string memory taskDescription,
-		uint256 taskWeight
-	) public onlyMember {
-		require(taskWeight < 11, "Task cannot weigh more than 10 units.");
-		Task memory newTask = Task({
-				taskName: taskName,
-				taskDescription: taskDescription,
-				taskWeight: taskWeight
-			});
-		taskVotingQue.push(newTask);
-	}
-
-	function voteOnTask(uint256 vote) external onlyMember {
-		address[] memory alreadyVoted = new address[](numOfMembers);
-		alreadyVoted[alreadyVoted.length - 1] = msg.sender;
-		for (uint256 i = 0; i < alreadyVoted.length; i++) {
-			require(alreadyVoted[i] != msg.sender, "You already voted");
-		}
-		Task memory taskBeingVoted = taskVotingQue[taskVotingQue.length - 1];
-		if (vote > minVotes) {
-			// call the mint function passing in taskBeingVoted
-		}
-	}
-
-	function structToJSON(Task memory task) internal pure returns (string memory) {
-		string memory jsonString = string(
+    function voteOnTask(uint256 vote) external onlyMember {
+        address[] memory alreadyVoted = new address[](numOfMembers);
+        alreadyVoted[alreadyVoted.length - 1] = msg.sender;
+        for (uint256 i = 0; i < alreadyVoted.length; i++) {
+            require(alreadyVoted[i] != msg.sender, "You already voted");
+        }
+        Task memory taskBeingVoted = taskVotingQue[taskVotingQue.length - 1];
+        if (vote > minVotes) {
+            // call the mint function passing in taskBeingVoted
+        }
+    }
+    
+    function structToJSON(
+        Task memory task
+    ) internal pure returns (string memory) {
+        string memory jsonString = string(
             abi.encodePacked(
                 '{"taskName":"',
                 task.taskName,
@@ -65,13 +69,13 @@ contract YourContract {
                 task.taskDescription,
                 '","taskWeight":',
                 uintToString(task.taskWeight),
-                '}'
+                "}"
             )
         );
         return jsonString;
-	}
+    }
 
-	function uintToString(uint256 value) internal pure returns (string memory) {
+    function uintToString(uint256 value) internal pure returns (string memory) {
         if (value == 0) {
             return "0";
         }
@@ -89,27 +93,10 @@ contract YourContract {
         }
         return string(buffer);
     }
+        
+    string public testResult;
 
-	string testResult;
-
-	function testTaskToJSON() public {
-		testResult = structToJSON(taskVotingQue[0]);
-	}
-	
-
+    function testTaskToJSON() public {
+        testResult = structToJSON(taskVotingQue[0]);
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
