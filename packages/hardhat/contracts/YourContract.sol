@@ -6,6 +6,11 @@ import "hardhat/console.sol";
 import "./TaskNFT.sol";
 
 contract YourContract {
+
+    constructor(TaskNFT _taskNFT) {
+        taskNFT = _taskNFT;
+    }
+
     struct Task {
         string taskName;
         string taskDescription;
@@ -16,7 +21,8 @@ contract YourContract {
     uint256 public numOfMembers;
     uint256 public minVotes = numOfMembers / 2;
 
-    mapping(address => bool) public isMember;
+   mapping(address => mapping(bytes32 => bool)) public hasVoted;
+   mapping(address => bool) public isMember;
 
     Task[] public taskVotingQue;
 
@@ -49,13 +55,12 @@ contract YourContract {
     }
 
     function voteOnTask(uint256 vote) external onlyMember {
-        address[] memory alreadyVoted = new address[](numOfMembers);
-        alreadyVoted[alreadyVoted.length - 1] = msg.sender;
-        for (uint256 i = 0; i < alreadyVoted.length; i++) {
-            require(alreadyVoted[i] != msg.sender, "You already voted");
-        }
         Task storage taskBeingVoted = taskVotingQue[taskVotingQue.length - 1];
         bytes32 taskID = keccak256(abi.encode(taskBeingVoted.taskDescription));
+
+        // require(!hasVoted[msg.sender][taskID], "You already voted");
+        // hasVoted[msg.sender][taskID] = true;
+
         if (vote > minVotes) {
             taskNFT.addTask(
                 taskID,
@@ -64,6 +69,8 @@ contract YourContract {
                 taskBeingVoted.taskWeight
             );
         }
+       // call the mint function, but who do we send it to?
+       taskNFT.safeMint(address(this));
     }
     
 }
