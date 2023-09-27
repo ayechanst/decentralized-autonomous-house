@@ -7,10 +7,6 @@ import "./TaskNFT.sol";
 
 contract YourContract {
 
-    constructor(TaskNFT _taskNFT) {
-        taskNFT = _taskNFT;
-    }
-
     struct Task {
         string taskName;
         string taskDescription;

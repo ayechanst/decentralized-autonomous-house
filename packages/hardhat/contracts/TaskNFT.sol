@@ -39,4 +39,9 @@ contract TaskNFT is ERC721, Ownable {
        metadata[taskID] = newTask;
     }
 
+    function transferOwnership(address newOwner) public override onlyOwner {
+        require(newOwner != address(0), "Invalid address");
+        transferOwnership(newOwner);
+    }
+
 }
