@@ -1,9 +1,0 @@
-House DAO Plan
-
-* Membership
-This will be an array of member for now
-* Suggesting Tasks
-Members make a struct that goes to a voting que
-* Voting
-Members will vote yes or no
-*
